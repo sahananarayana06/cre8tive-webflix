@@ -91,7 +91,7 @@ Our team will review your requirements.
 <span>EMAIL</span>
 
 <p>
-hello@cre8tivewebflix.com
+crea8twebflix@gmail.com
 </p>
 
 </div>
@@ -102,7 +102,7 @@ hello@cre8tivewebflix.com
 <span>PHONE</span>
 
 <p>
-+91 XXXXX XXXXX
++91 7892321560
 </p>
 
 </div>
