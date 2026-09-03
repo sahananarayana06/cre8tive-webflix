@@ -101,7 +101,7 @@ professionals and individuals.
 START A PROJECT →
 </a>
 
-<a href="portfolio.php"
+<a href="c8w-portfolio.online"
 class="btn btn-outline">
 VIEW PORTFOLIO
 </a>
@@ -154,12 +154,12 @@ VIEW PORTFOLIO
 <section class="stats">
 
 <div>
-<strong>50+</strong>
+<strong>10+</strong>
 <span>Projects</span>
 </div>
 
 <div>
-<strong>30+</strong>
+<strong>5+</strong>
 <span>Happy Clients</span>
 </div>
 
@@ -323,7 +323,7 @@ We Create • We Design • We Develop
 
 <a href="about.php">About</a>
 <a href="services.php">Services</a>
-<a href="portfolio.php">Portfolio</a>
+<a href="c8w-portfolio.online">Portfolio</a>
 <a href="contact.php">Contact</a>
 
 </div>
