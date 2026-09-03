@@ -113,7 +113,7 @@ crea8twebflix@gmail.com
 <span>LOCATION</span>
 
 <p>
-Karnataka, India
+Mangalore, India
 </p>
 
 </div>
