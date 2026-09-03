@@ -45,7 +45,7 @@ content="width=device-width, initial-scale=1.0">
 </li>
 
 <li>
-<a href="portfolio.php">Portfolio</a>
+<a href="c8w-portfolio.online">Portfolio</a>
 </li>
 
 <li>
