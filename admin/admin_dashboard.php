@@ -13,36 +13,99 @@ if (!isset($_SESSION["admin_id"])) {
 include "../backend/db.php";
 
 
-$contacts =
-    $conn->query(
-        "SELECT COUNT(*) AS total
-         FROM contacts"
-    )->fetch_assoc()["total"];
+/* =========================================
+   PROJECT REQUESTS COUNT
+========================================= */
 
+$contactsResult = $conn->query(
+    "SELECT COUNT(*) AS total
+     FROM contacts"
+);
+
+$contacts =
+    $contactsResult
+    ? $contactsResult->fetch_assoc()["total"]
+    : 0;
+
+
+/* =========================================
+   FEEDBACK COUNT
+========================================= */
+
+$feedbackResult = $conn->query(
+    "SELECT COUNT(*) AS total
+     FROM feedback"
+);
 
 $feedback =
-    $conn->query(
-        "SELECT COUNT(*) AS total
-         FROM feedback"
-    )->fetch_assoc()["total"];
+    $feedbackResult
+    ? $feedbackResult->fetch_assoc()["total"]
+    : 0;
+
+
+/* =========================================
+   WEBSITE STATISTICS
+========================================= */
+
+$statsResult = $conn->query(
+    "SELECT
+        projects,
+        clients,
+        creativity,
+        support_hours
+     FROM site_stats
+     WHERE id = 1
+     LIMIT 1"
+);
+
+
+if ($statsResult && $statsResult->num_rows > 0) {
+
+    $stats =
+        $statsResult->fetch_assoc();
+
+    $projects =
+        (int)$stats["projects"];
+
+    $clients =
+        (int)$stats["clients"];
+
+    $creativity =
+        (int)$stats["creativity"];
+
+    $support =
+        (int)$stats["support_hours"];
+
+} else {
+
+    $projects = 0;
+    $clients = 0;
+    $creativity = 100;
+    $support = 24;
+
+}
 
 ?>
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Admin Dashboard</title>
 
-<link rel="stylesheet"
-href="admin.css">
+<link
+    rel="stylesheet"
+    href="admin.css"
+>
 
 </head>
 
@@ -52,80 +115,150 @@ href="admin.css">
 <div class="admin-container">
 
 
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+
 <aside class="sidebar">
 
-<h2>
-CRE8TIVE
-<span>WEBFLIX</span>
-</h2>
+    <h2>
+        CRE8TIVE
+        <span>WEBFLIX</span>
+    </h2>
 
-<a href="admin_dashboard.php">
-Dashboard
-</a>
 
-<a href="contacts.php">
-Project Requests
-</a>
+    <a
+        href="admin_dashboard.php"
+        class="active"
+    >
+        Dashboard
+    </a>
 
-<a href="feedback.php">
-Feedback
-</a>
 
-<a href="logout.php">
-Logout
-</a>
+    <a href="contacts.php">
+        Project Requests
+    </a>
+
+
+    <a href="feedback.php">
+        Feedback
+    </a>
+
+
+    <a href="stats.php">
+        Website Statistics
+    </a>
+
+
+    <a href="logout.php">
+        Logout
+    </a>
 
 </aside>
 
 
+<!-- =========================================
+     MAIN
+========================================= -->
+
 <main class="admin-main">
 
-<h1>
-Dashboard
-</h1>
-
-<p class="welcome">
-Welcome,
-<?= htmlspecialchars(
-    $_SESSION["admin_username"]
-) ?>
-</p>
+    <h1>
+        Dashboard
+    </h1>
 
 
-<div class="dashboard-cards">
+    <p class="welcome">
+
+        Welcome,
+
+        <?= htmlspecialchars(
+            $_SESSION["admin_username"]
+        ) ?>
+
+    </p>
 
 
-<div class="dashboard-card">
+    <!-- =====================================
+         DASHBOARD CARDS
+    ====================================== -->
 
-<span>PROJECT REQUESTS</span>
-
-<strong>
-<?= $contacts ?>
-</strong>
-
-<a href="contacts.php">
-View Requests →
-</a>
-
-</div>
+    <div class="dashboard-cards">
 
 
-<div class="dashboard-card">
+        <!-- PROJECT REQUESTS -->
 
-<span>FEEDBACK</span>
+        <div class="dashboard-card">
 
-<strong>
-<?= $feedback ?>
-</strong>
-
-<a href="feedback.php">
-View Feedback →
-</a>
-
-</div>
+            <span>
+                PROJECT REQUESTS
+            </span>
 
 
-</div>
+            <strong>
+                <?= $contacts ?>
+            </strong>
+
+
+            <a href="contacts.php">
+                View Requests →
+            </a>
+
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div class="dashboard-card">
+
+            <span>
+                FEEDBACK
+            </span>
+
+
+            <strong>
+                <?= $feedback ?>
+            </strong>
+
+
+            <a href="feedback.php">
+                View Feedback →
+            </a>
+
+        </div>
+
+
+        <!-- WEBSITE STATISTICS -->
+
+        <div class="dashboard-card">
+
+            <span>
+                WEBSITE STATISTICS
+            </span>
+
+
+            <strong>
+                <?= $projects ?>
+            </strong>
+
+
+            <p>
+                Projects
+                &nbsp; | &nbsp;
+                <?= $clients ?>
+                Clients
+            </p>
+
+
+            <a href="stats.php">
+                Manage Statistics →
+            </a>
+
+        </div>
+
+
+    </div>
+
 
 </main>
 
