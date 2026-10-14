@@ -2,170 +2,187 @@
 
 session_start();
 
-if (!isset($_SESSION["admin_id"])) {
-
+if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit;
-
 }
 
 include "../backend/db.php";
 
 $result = $conn->query(
-    "SELECT * FROM contacts
-     ORDER BY id DESC"
+    "SELECT * FROM contacts ORDER BY id DESC"
 );
 
 ?>
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+      content="width=device-width, initial-scale=1.0">
 
-<title>Project Requests</title>
+<title>Project Requests | Admin</title>
 
-<link rel="stylesheet"
-href="admin.css">
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #00081B;
+    color: white;
+}
+
+.container {
+    width: 95%;
+    margin: 40px auto;
+}
+
+h1 {
+    color: #A855F7;
+    margin-bottom: 25px;
+}
+
+.table-box {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0B1228;
+}
+
+th,
+td {
+    padding: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+
+th {
+    background: #111936;
+    color: #A855F7;
+}
+
+td {
+    color: #B8BBC8;
+}
+
+tr:hover {
+    background: #121b38;
+}
+
+.message {
+    min-width: 250px;
+}
+
+.date {
+    white-space: nowrap;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="admin-container">
+<div class="container">
 
-<aside class="sidebar">
+    <h1>Project Requests</h1>
 
-<h2>
-CRE8TIVE
-<span>WEBFLIX</span>
-</h2>
+    <div class="table-box">
 
-<a href="dashboard.php">
-Dashboard
-</a>
+        <table>
 
-<a href="contacts.php">
-Project Requests
-</a>
+            <thead>
 
-<a href="feedback.php">
-Feedback
-</a>
+                <tr>
 
-<a href="logout.php">
-Logout
-</a>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Project Type</th>
+                    <th>Project Details</th>
+                    <th>Date</th>
 
-</aside>
+                </tr>
 
+            </thead>
 
-<main class="admin-main">
+            <tbody>
 
-<h1>Project Requests</h1>
+            <?php
 
+            if ($result && $result->num_rows > 0) {
 
-<div class="table-container">
+                while ($row = $result->fetch_assoc()) {
 
-<table>
+            ?>
 
-<thead>
+                <tr>
 
-<tr>
+                    <td>
+                        <?= htmlspecialchars($row['id']) ?>
+                    </td>
 
-<th>ID</th>
+                    <td>
+                        <?= htmlspecialchars($row['name']) ?>
+                    </td>
 
-<th>Name</th>
+                    <td>
+                        <?= htmlspecialchars($row['email']) ?>
+                    </td>
 
-<th>Email</th>
+                    <td>
+                        <?= htmlspecialchars($row['phone']) ?>
+                    </td>
 
-<th>Phone</th>
+                    <td>
+                        <?= htmlspecialchars($row['project_type']) ?>
+                    </td>
 
-<th>Project</th>
+                    <td class="message">
+                        <?= nl2br(htmlspecialchars($row['message'])) ?>
+                    </td>
 
-<th>Message</th>
+                    <td class="date">
+                        <?= htmlspecialchars($row['created_at']) ?>
+                    </td>
 
-<th>Date</th>
+                </tr>
 
-<th>Action</th>
+            <?php
 
-</tr>
+                }
 
-</thead>
+            } else {
 
+            ?>
 
-<tbody>
+                <tr>
 
-<?php
+                    <td colspan="7">
+                        No project requests found.
+                    </td>
 
-while ($row = $result->fetch_assoc()):
+                </tr>
 
-?>
+            <?php
 
-<tr>
+            }
 
-<td>
-<?= $row["id"] ?>
-</td>
+            ?>
 
-<td>
-<?= htmlspecialchars($row["name"]) ?>
-</td>
+            </tbody>
 
-<td>
-<?= htmlspecialchars($row["email"]) ?>
-</td>
+        </table>
 
-<td>
-<?= htmlspecialchars($row["phone"]) ?>
-</td>
-
-<td>
-<?= htmlspecialchars(
-    $row["project_type"]
-) ?>
-</td>
-
-<td>
-<?= htmlspecialchars($row["message"]) ?>
-</td>
-
-<td>
-<?= $row["created_at"] ?>
-</td>
-
-<td>
-
-<a class="delete"
-href="delete_contact.php?id=
-<?= $row["id"] ?>"
-onclick="
-return confirm(
-'Delete this request?'
-);
-">
-Delete
-</a>
-
-</td>
-
-</tr>
-
-<?php endwhile; ?>
-
-</tbody>
-
-</table>
-
-</div>
-
-</main>
+    </div>
 
 </div>
 
