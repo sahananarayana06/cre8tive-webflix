@@ -3,37 +3,39 @@
 include "db.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-
     header("Location: ../feedback.php");
     exit;
-
 }
 
+
 $name = trim($_POST["name"] ?? "");
-$rating = intval($_POST["rating"] ?? 0);
+$rating = (int)($_POST["rating"] ?? 0);
 $message = trim($_POST["message"] ?? "");
 
 
-if (
-    empty($name) ||
-    empty($message) ||
-    $rating < 1 ||
-    $rating > 5
-) {
+/* VALIDATION */
 
-    die("Please provide valid feedback.");
+if ($name === "" || $message === "") {
+
+    die("Please fill all required fields.");
 
 }
 
 
-$stmt = $conn->prepare(
+if ($rating < 1 || $rating > 5) {
 
+    die("Please select a valid rating.");
+
+}
+
+
+/* INSERT FEEDBACK */
+
+$stmt = $conn->prepare(
     "INSERT INTO feedback
     (name, rating, message)
     VALUES (?, ?, ?)"
-
 );
-
 
 $stmt->bind_param(
     "sis",
@@ -46,26 +48,31 @@ $stmt->bind_param(
 if ($stmt->execute()) {
 
     echo "
-
     <script>
 
-    alert('Thank you for your feedback!');
+        alert('Feedback submitted successfully!');
 
-    window.location.href='../feedback.php';
+        window.location.href = '../feedback.php';
 
     </script>
-
     ";
 
 } else {
 
-    echo "Unable to submit feedback.";
+    echo "
+    <script>
+
+        alert('Something went wrong. Please try again.');
+
+        window.location.href = '../feedback.php';
+
+    </script>
+    ";
 
 }
 
 
 $stmt->close();
-
 $conn->close();
 
 ?>
