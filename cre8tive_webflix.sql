@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2026 at 01:04 PM
+-- Generation Time: Oct 14, 2026 at 05:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,8 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -43,11 +44,18 @@ CREATE TABLE `contacts` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
-  `project_type` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
+  `project_type` varchar(100) NOT NULL,
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `name`, `email`, `phone`, `project_type`, `message`, `created_at`) VALUES
+(1, 'Sahana Narayana', 'sahananarayana21@gmail.com', '7760373717', 'Web Development', 'Web Development', '2026-10-14 15:08:40');
 
 -- --------------------------------------------------------
 
@@ -58,10 +66,17 @@ CREATE TABLE `contacts` (
 CREATE TABLE `feedback` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `rating` int(11) NOT NULL,
+  `rating` tinyint(4) NOT NULL,
   `message` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `name`, `rating`, `message`, `created_at`) VALUES
+(1, 'Sahana Narayana', 5, 'Good service', '2026-10-14 15:07:24');
 
 --
 -- Indexes for dumped tables
@@ -100,7 +115,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `feedback`
