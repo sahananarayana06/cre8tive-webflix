@@ -225,11 +225,8 @@ body::after {
         );
 
     background-size: 200%;
-
     -webkit-background-clip: text;
-
     -webkit-text-fill-color: transparent;
-
     animation: logoGradient 4s linear infinite;
 
 }
@@ -449,7 +446,6 @@ body::after {
 
     /* Normal color before hover */
     background: none;
-
     -webkit-background-clip: initial;
     -webkit-text-fill-color: #ffffff;
 
@@ -869,6 +865,12 @@ body::after {
         0 0 15px
         rgba(0,245,255,.6);
 
+}
+.stats strong {
+  font-size: 2rem;
+  font-weight: bold;
+  display: block;
+  transition: all 0.3s ease;
 }
 
 
@@ -1674,83 +1676,6 @@ textarea {
 
 
 /* =====================================
-   FOOTER
-===================================== */
-
-footer {
-
-    padding: 40px 7%;
-
-    border-top:
-        1px solid var(--border);
-
-    background:
-        #020207;
-
-}
-
-
-.footer-main {
-
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-}
-
-
-.footer-links {
-
-    display: flex;
-
-    gap: 25px;
-
-}
-
-
-.footer-links a {
-
-    color: #858998;
-
-    text-decoration: none;
-
-    font-size: 12px;
-
-    transition: .3s;
-
-}
-
-
-.footer-links a:hover {
-
-    color: var(--cyan);
-
-}
-
-
-.footer-bottom {
-
-    text-align: center;
-
-    padding-top: 25px;
-
-    margin-top: 30px;
-
-    border-top:
-        1px solid var(--border);
-
-    color: #666a7a;
-
-    font-size: 11px;
-
-}
-
-
-/* =====================================
    MOBILE
 ===================================== */
 
@@ -2029,3 +1954,4 @@ footer {
     }
 
 }
+
