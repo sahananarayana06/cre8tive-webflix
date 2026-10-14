@@ -9,12 +9,203 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>Services | Cre8tive Webflix</title>
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
 
 <link rel="stylesheet" href="css/style.css">
+<style>
+    /* =========================
+   FOOTER BOTTOM
+========================= */
+
+.footer-bottom {
+    text-align: center;
+
+    padding: 20px;
+
+    border-top:
+        1px solid rgba(139, 46, 255, 0.15);
+
+    color: #666a7a;
+
+    font-size: 14px;
+}
+/* =========================================
+   WHATSAPP FLOATING BUTTON
+========================================= */
+
+.whatsapp-float {
+    position: fixed;
+
+    right: 26px;
+    bottom: 30px;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #25D366;
+
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    text-decoration: none;
+
+    font-size: 34px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
+
+    z-index: 9999;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Hover */
+
+.whatsapp-float:hover {
+
+    transform: scale(1.12);
+
+    box-shadow:
+        0 0 25px rgba(37, 211, 102, 0.65);
+
+    color: #ffffff;
+}
+
+
+/* Icon */
+
+.whatsapp-float span {
+
+    line-height: 1;
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .whatsapp-float {
+
+        width: 54px;
+        height: 54px;
+
+        right: 18px;
+        bottom: 18px;
+
+        font-size: 29px;
+
+    }
+
+}
+.back-to-top {
+    position: fixed;
+
+    right: 24px;
+    bottom: 95px;
+
+    width: 54px;
+    height: 54px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(121, 82, 213, 0.12);;
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+
+    z-index: 9998;
+}
+
+
+/* SHOW AFTER SCROLL */
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* CYAN NEON ARROW */
+
+.back-to-top i {
+    color: #ffffff;
+
+    text-shadow:
+        0 0 15px
+        rgba(0,245,255,.6);
+}
+
+
+/* HOVER */
+
+.back-to-top:hover {
+    transform: translateY(-3px);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .back-to-top {
+        right: 18px;
+        bottom: 82px;
+
+        width: 50px;
+        height: 50px;
+
+        font-size: 17px;
+    }
+
+}
+</style>
 
 </head>
 
 <body>
+    <!-- Back To Top -->
+<button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <i class="fas fa-chevron-up"></i>
+</button>
+
+    <!-- WhatsApp Floating Button -->
+<a
+    href="https://wa.me/917892321560"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat with us on WhatsApp"
+>
+    <span><i class="fab fa-whatsapp"></i></span>
+</a>
 
 <header>
 
@@ -35,7 +226,7 @@ content="width=device-width, initial-scale=1.0">
 <li><a href="services.php"
 class="active">Services</a></li>
 
-<li><a href="portfolio.php">Portfolio</a></li>
+<li><a href="https://c8w-portfolio.online/" target="_blank">Portfolio</a></li>
 
 <li><a href="contact.php">Contact</a></li>
 
