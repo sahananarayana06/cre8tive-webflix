@@ -2,47 +2,55 @@
 
 include "db.php";
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+/* =========================
+   GET FORM DATA
+========================= */
 
-    header("Location: ../contact.php");
-    exit;
+$name = trim($_POST['name'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$phone = trim($_POST['phone'] ?? '');
+$project_type = trim($_POST['project_type'] ?? '');
+$message = trim($_POST['message'] ?? '');
 
-}
 
-$name = trim($_POST["name"] ?? "");
-$email = trim($_POST["email"] ?? "");
-$phone = trim($_POST["phone"] ?? "");
-$project_type = trim($_POST["project_type"] ?? "");
-$message = trim($_POST["message"] ?? "");
-
+/* =========================
+   VALIDATION
+========================= */
 
 if (
     empty($name) ||
     empty($email) ||
+    empty($phone) ||
     empty($project_type) ||
     empty($message)
 ) {
-
     die("Please fill all required fields.");
-
 }
 
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
     die("Please enter a valid email address.");
-
 }
 
 
-$stmt = $conn->prepare(
+if (!preg_match('/^[0-9]{10}$/', $phone)) {
+    die("Please enter a valid 10-digit phone number.");
+}
 
-    "INSERT INTO contacts
-    (name, email, phone, project_type, message)
-    VALUES (?, ?, ?, ?, ?)"
 
-);
+/* =========================
+   STORE IN DATABASE
+========================= */
 
+$sql = "INSERT INTO contacts
+        (name, email, phone, project_type, message)
+        VALUES (?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    die("Database error.");
+}
 
 $stmt->bind_param(
     "sssss",
@@ -53,30 +61,39 @@ $stmt->bind_param(
     $message
 );
 
-
-if ($stmt->execute()) {
-
-    echo "
-
-    <script>
-
-    alert('Project request submitted successfully!');
-
-    window.location.href='../contact.php';
-
-    </script>
-
-    ";
-
-} else {
-
-    echo "Something went wrong. Please try again.";
-
+if (!$stmt->execute()) {
+    die("Unable to save project request.");
 }
 
 
-$stmt->close();
+/* =========================
+   WHATSAPP MESSAGE
+========================= */
 
-$conn->close();
+$whatsapp_number = "917892321560";
+
+$whatsapp_message =
+    "Hello Cre8tive Webflix!%0A%0A" .
+    "I want to start a project.%0A%0A" .
+    "Name: " . rawurlencode($name) . "%0A" .
+    "Email: " . rawurlencode($email) . "%0A" .
+    "Phone: " . rawurlencode($phone) . "%0A" .
+    "Project Type: " . rawurlencode($project_type) . "%0A" .
+    "Project Details: " . rawurlencode($message);
+
+
+/* =========================
+   REDIRECT TO WHATSAPP
+========================= */
+
+$whatsapp_url =
+    "https://wa.me/" .
+    $whatsapp_number .
+    "?text=" .
+    $whatsapp_message;
+
+header("Location: " . $whatsapp_url);
+
+exit;
 
 ?>
